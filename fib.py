@@ -9,5 +9,5 @@ def fib(x):
   return result
 
 if __name__ == '__main__':
-  data = fib(int(input('Enter the range : ')))
+  data = fib(int(input('Enter the max range : ')))
   print(data)
