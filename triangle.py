@@ -1,4 +1,3 @@
-#! /usr/bin/env python3
 # program to print * triangle for a give number.
 
 def triangle(number):    
