@@ -2,7 +2,7 @@
 
 import math
 
-def plotXY():
+def plot_coordinates():
     for i in range(1, 100):
         t = i * 0.1
         x = 20.0 * t * math.cos(math.radians(70))
@@ -12,4 +12,4 @@ def plotXY():
             break
 
 if __name__ == '__main__':
-    plotXY()
+    plot_coordinates()
