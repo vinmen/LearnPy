@@ -1,6 +1,20 @@
-def add(x, y):
-    print(x + y)
-    
-if __main__ == '__name__':
-    add(3 + 4)
-    add(5 + 10)
+prices = {
+   'ACME': 45.23,
+   'AAPL': 612.78,
+   'IBM': 205.55,
+   'HPQ': 37.20,
+   'FB': 10.75
+}
+
+min_price = min(zip(prices.values(), prices.keys()))
+max_price = max(zip(prices.values(), prices.keys()))
+
+print('min price:', min_price)
+print('max price:', max_price)
+
+print('sorted prices:')
+prices_sorted = sorted(zip(prices.values(), prices.keys()))
+for price, name in prices_sorted:
+    print('    ', name, price)
+
+
