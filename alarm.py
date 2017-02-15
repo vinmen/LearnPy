@@ -14,4 +14,4 @@ def getArgs(args):
 
 if __name__ == "__main__":
     getArgs(sys.argv)
-    readFile("/home/menon/py/learnPy/alarm.txt")
+    readFile("alarm.txt")
