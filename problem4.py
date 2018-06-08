@@ -27,7 +27,25 @@ def find_largest_number():
 
 def find_largest(data):  
     number = 0  
-    temp2 = ''
+    temp2 = ''  
+    
+    temp_list = list(data)
+    for m in range(len(data)): 
+        if m > 0:
+            tt = data[0]
+            data[0] = data[m]
+            data[m] = tt
+        for n in range(len(data)):            
+            temp_list = list(data)                      
+            if temp_list[m] != temp_list[n]:
+                temp_main = temp_list[m]
+                temp_list[m] = temp_list[n]
+                temp_list[n]= temp_main
+                print(temp_list)
+            elif temp_list[m] == temp_list[n]:
+                print(temp_list)
+
+    return
     for i in range(len(data) - 1):  
         if i > 0:
             temp_number = data[i]
@@ -51,6 +69,10 @@ def find_largest(data):
 
 
 if __name__ == "__main__":
+    '''for a in range(4):
+        for b in range(4):
+            print(str(a) + str(b))'''
+    
     find_largest_number()
     data = [50, 2, 1, 9]   
-    find_largest(data)     
+    find_largest(data) 
