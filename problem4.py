@@ -63,8 +63,22 @@ def find_largest(data):
             if int(temp2) > number:
                 number = int(temp2)
 
-    print(number)     
+    print(number) 
+
+def swap(data, x, y):
+    temp = data[x]
+    data[x] = data[y]
+    data[y] = temp    
     
+
+def back_tracking(data, x, y):
+    if x == y:
+        print(data)
+    for i in range(x):
+        swap(data, x, i)
+        back_tracking(data, i, y + 1)
+        swap(data, x, i)
+
     
 
 
@@ -73,6 +87,7 @@ if __name__ == "__main__":
         for b in range(4):
             print(str(a) + str(b))'''
     
-    find_largest_number()
+    #find_largest_number()
     data = [50, 2, 1, 9]   
-    find_largest(data) 
+    #find_largest(data) 
+    back_tracking(data, 4, 0)
