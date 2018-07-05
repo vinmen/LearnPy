@@ -1,47 +1,36 @@
 from PIL import Image
 
+
 def jpg2ascii():
+    symbols = ["@", "#", "£", "=", "+", "|", ":", ".", " "]
     img = Image.open("man.jpg")
-    pix = img.load()    
+    pix = img.load()
     data = []
 
-    #data = ""
-    print(img.size)
+    data = ""
+    symbol_count = len(symbols)
 
-    for x in range(img.size[0]):     
-        #data = data + "\n"  
-        for y in range(img.size[1]):
-            c = toGray(pix[x, y])
-            if chr(c) not in data:
-                data.append(chr(c))
+    for y in range(img.size[1]):
+        if y > 0 :
+            data = data + "\n"
+        for x in range(img.size[0]):
+            grayScale = toGray(pix[x, y])
+            data = data + symbols[int((grayScale / 255.0) * symbol_count)]
 
-    #data.sort()               
-    print(data)
-    #text_file = open("man.txt", "w")
-    #text_file.write(data)
-   
+    text_file = open("man.txt", "w")
+    text_file.write(data)
+
 
 def luminance(c):
-    red   = c[0]
+    red = c[0]
     green = c[1]
-    blue  = c[2]
+    blue = c[2]
     return (.299 * red) + (.587 * green) + (.114 * blue)
+
 
 def toGray(c):
     y = int(round(luminance(c)))
     return y
-    
 
-jpg2ascii()
-
-
-'''@@@@@@@
-#############
-£££££££££££££
-============
-++++++++++++
-||||||||||||||||||||||||||||||
-:::::::::::::::::::::::
-.......................
-                        
-^space'''
+if __name__ == "__main__":
+    jpg2ascii()
