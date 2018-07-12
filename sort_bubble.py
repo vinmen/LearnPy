@@ -1,17 +1,13 @@
-def bubble_sort(data):
-    n = len(data)
-    swapped = False
-    while not swapped:
-        swapped = True
-        for i in range(n):
-            if data[i-1] > data[i]:
-                temp = data[i]
-                data[i] = data[i-1]
-                data[i-1] = temp
-                swapped = False
-        n = n-1
-    
-    print(data)
 
-data = [1, 50, 3, 8, 9, 7, 12, 6]
-bubble_sort(data)
+def bubble_sort(data):
+    for i in range(len(data)):
+        for j in range(1, len(data) - i):
+             if data[j-1] > data[j]:
+                temp = data[j]
+                data[j] = data[j-1]
+                data[j-1] = temp
+    print(data)            
+   
+if __name__ == "__main__":
+    data = [4, 3, 2, 1]
+    bubble_sort(data)
