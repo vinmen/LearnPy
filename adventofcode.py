@@ -1,60 +1,122 @@
 
-def calculate_signal(circuits, item):
-    for data in circuits:
-        if data[0] != '' and data[0] == item[4]:
-            data[2] = item[5]
-        elif data[1] != '' and data[1] == item[4]:
-            data[3] = item[5]
+def calculate_signal(wires, circuits):    
+    for k, v in wires.items():
+        if v[0] != None and v[1] != True:
+            for item in circuits:
+                if item[7] == "&" or item[7] == "|":
+                    if item[0] == k:
+                        item[3] = v[0]
+                        if item[4] != None:
+                            if item[7] == "&":
+                                item[5] = int(item[3]) & int(item[4])
+                            else:
+                                item[5] = int(item[3]) | int(item[4])
 
-def run():
+                            wires[item[2]] = [str(item[5]), False]
+                    elif item[1] == k:
+                        item[4] = v[0]
+                        if item[3] != None:
+                            if item[7] == "&":
+                                item[5] = int(item[3]) & int(item[4])
+                            else:
+                                item[5] = int(item[3]) | int(item[4])
+
+                            wires[item[2]] = [str(item[5]), False]
+                    
+                elif item[7] == ">>":
+                    if item[0] == k:
+                        item[3] = v[0]
+                        item[5] = int(v[0]) >> int(item[6])
+                        wires[item[2]] = [str(item[5]), False]
+                elif item[7] == "<<":
+                    if item[0] == k:
+                        item[3] = v[0]
+                        item[5] = int(v[0]) << int(item[6])
+                        wires[item[2]] = [str(item[5]), False]
+                elif item[7] == "~":
+                    if item[0] == k:
+                        item[3] = v[0]
+                        item[5] = ~ int(v[0])
+                        wires[item[2]] = [str(item[5]), False]
+
+            wires[k] = [v[0], True]     
+
+    #for item in circuits:
+        #print(item)
+
+    for k, v in wires.items():
+        print(k, v)
+
+def create_datatset():
     with open("adventofcode.txt") as f:
         data = f.read().splitlines()
    
+    wires = {}
     circuits = []
     for line in data:
-        in_1 = ""
-        in_2 = ""
+        in_1 = None
+        in_2 = None
         out = ""
         gate = ""
-        signal = ""
+        out_signal = None
+        shifter = None
 
-        if line.find("AND") > -1:        
+        if line.find("AND") > -1:   
             in_1 = line[0:line.find(" AND")]
             in_2 = line[line.find(" AND") + 5:line.find(" ->")]
-            gate = "&"   
+            gate = "&"     
         elif line.find("OR") > -1:
             in_1 = line[0:line.find(" OR")]
             in_2 = line[line.find(" OR") + 4:line.find(" ->")]
-            gate = "|"
+            gate = "|"  
         elif line.find("LSHIFT") > -1:
             in_1 = line[0:line.find("SHIFT") - 2]
-            in_2 = line[line.find("SHIFT") + 6:line.find(" ->")]
-            gate = "<<"
+            shifter = line[line.find("SHIFT") + 6:line.find(" ->")]
+            gate = "<<"  
         elif line.find("RSHIFT") > -1:
             in_1 = line[0:line.find("SHIFT") - 2]
-            in_2 = line[line.find("SHIFT") + 6:line.find(" ->")]
-            gate = ">>"
-        elif line.find("NOT") > -1:        
+            shifter = line[line.find("SHIFT") + 6:line.find(" ->")]
+            gate = ">>"     
+        elif line.find("NOT") > -1:   
             in_1 = line[line.find("NOT") + 4:line.find(" ->")]
-            gate = "~"
+            gate = "~"   
         else:
-            gate = "-"
+            gate = "="
             if line.find("a") > -1:
-                in_1 = line[0:line.find(" ->")]
+                in_1 = line[0:line.find(" ->")]   
             else:
-                signal = line[0:line.find(" ->")]
+                out_signal = line[0:line.find(" ->")]
 
         out = line[line.find("->") + 3:]
-        circuits.append([in_1, in_2, "", "", out, signal, gate])
+        circuits.append([in_1, in_2, out, None, None, out_signal, shifter, gate])  
 
-    for item in circuits:
-        if item[5] != '':
-            calculate_signal(circuits, item)
+        if in_1 != None:
+            if in_1 not in wires:
+                wires[in_1] = [out_signal, False]
+            else:
+                if out_signal != None:
+                    wires[in_1] = [out_signal, False]
 
-    for item in circuits:
-        print(item)
+        if in_2 != None:
+            if in_2 not in wires:
+                wires[in_2] = [out_signal, False]
+            else:
+                if out_signal != None:
+                    wires[in_2] = [out_signal, False]
+
+        if out != None:
+            if out not in wires:
+                wires[out] = [out_signal, False]
+            else:
+                if out_signal != None:
+                    wires[out] = [out_signal, False]
+
+    #for item in circuits:
+        #print(item)   
+    
+
+    calculate_signal(wires, circuits)
 
 
 if __name__ == "__main__":
-    run()
-    
+    create_datatset()
