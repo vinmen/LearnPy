@@ -55,12 +55,16 @@ def create_datatset():
         in_1 = None
         in_2 = None
         out = ""
+        in1_signal = None
         gate = ""
         out_signal = None
         shifter = None
 
         if line.find("AND") > -1:   
             in_1 = line[0:line.find(" AND")]
+            if in_1 == "1":
+                in_1 = None
+                in1_signal = 1
             in_2 = line[line.find(" AND") + 5:line.find(" ->")]
             gate = "&"     
         elif line.find("OR") > -1:
@@ -86,7 +90,7 @@ def create_datatset():
                 out_signal = line[0:line.find(" ->")]
 
         out = line[line.find("->") + 3:]
-        circuits.append([in_1, in_2, out, None, None, out_signal, shifter, gate])  
+        circuits.append([in_1, in_2, out, in1_signal, None, out_signal, shifter, gate])  
 
         if in_1 != None:
             if in_1 not in wires:
@@ -115,12 +119,12 @@ def create_datatset():
 
     calculate_signal(wires, circuits)
 
-    #for k, v in wires.items():
-        #if v[0] != None:
-        #print(k, v)
+    for k, v in wires.items():
+        if v[0] != None:
+            print(k, v)
 
-    for item in circuits:
-        print(item)   
+    #for item in circuits:
+        #print(item)   
 
 
 if __name__ == "__main__":
