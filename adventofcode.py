@@ -39,13 +39,11 @@ def calculate_signal(wires, circuits):
                         item[5] = ~ int(v[0])
                         wires[item[2]] = [str(item[5]), False]
 
-            wires[k] = [v[0], True]     
+            wires[k] = [v[0], True] 
+            calculate_signal(wires, circuits) 
 
     #for item in circuits:
-        #print(item)
-
-    for k, v in wires.items():
-        print(k, v)
+        #print(item)    
 
 def create_datatset():
     with open("adventofcode.txt") as f:
@@ -116,6 +114,13 @@ def create_datatset():
     
 
     calculate_signal(wires, circuits)
+
+    #for k, v in wires.items():
+        #if v[0] != None:
+        #print(k, v)
+
+    for item in circuits:
+        print(item)   
 
 
 if __name__ == "__main__":
