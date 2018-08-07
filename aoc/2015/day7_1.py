@@ -1,7 +1,11 @@
 
-def calculate_signal(wires, circuits):    
+import os
+
+def calculate_signal(wires, circuits):  
+    loop = False  
     for k, v in wires.items():
         if v[0] != None and v[1] != True:
+            loop = True
             for item in circuits:
                 if item[7] == "&" or item[7] == "|":
                     if item[0] == k:
@@ -40,13 +44,15 @@ def calculate_signal(wires, circuits):
                         wires[item[2]] = [str(item[5]), False]
 
             wires[k] = [v[0], True] 
-            calculate_signal(wires, circuits) 
+            
+    if loop:
+        calculate_signal(wires, circuits) 
 
     #for item in circuits:
         #print(item)    
 
 def create_datatset():
-    with open("adventofcode.txt") as f:
+    with open(os.path.dirname(os.path.realpath(__file__)) + "/day7.txt") as f:
         data = f.read().splitlines()
    
     wires = {}
@@ -125,7 +131,6 @@ def create_datatset():
 
     #for item in circuits:
         #print(item)   
-
 
 if __name__ == "__main__":
     create_datatset()
