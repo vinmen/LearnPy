@@ -110,3 +110,7 @@ man.txt
 user_log.txt
 users.txt
 test*
+error.txt
+out.txt
+out_temp.txt
+url.txt
