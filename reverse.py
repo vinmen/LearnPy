@@ -7,4 +7,4 @@ def reverse(input):
 		return input[-1] + reverse(input[0:len(input) - 1])
 
 if __name__ == "__main__":
-  reverse("hello")
+	reverse("hello")
